@@ -1,0 +1,11 @@
+{
+    "name": "lumen/api",
+    "description": "api fo joomla",
+    "authors": [
+        {
+            "name": "Mikhail Nikiforov",
+            "email": "mikha-nikiforov@yandex.ru"
+        }
+    ],
+    "require": {}
+}
