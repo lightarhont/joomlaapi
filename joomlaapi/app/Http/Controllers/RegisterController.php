@@ -61,10 +61,6 @@ class RegisterController extends Controller
         endif;
     }
     
-    protected function result($array){
-        return response()->json(json_encode($array));
-    }
-    
     protected function errors($error){
         switch ($error) {
             case 1:
