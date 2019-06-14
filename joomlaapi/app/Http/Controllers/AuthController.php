@@ -39,7 +39,7 @@ class AuthController extends Controller
         
         if($this->transaction($insert)):
             $insert['id'] = $user->id;
-            return $insert;
+            return $this->result($insert);
         else:
             return $this->errors(3);
         endif;
@@ -75,9 +75,5 @@ class AuthController extends Controller
                 break;
             }
         return $this->result(array('error'=>array('code'=>$error, 'message'=>$errormsg)));
-    }
-    
-    protected function result($array){
-        return response()->json(json_encode($array));
     }
 }
