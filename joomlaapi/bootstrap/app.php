@@ -25,7 +25,7 @@ $app = new Laravel\Lumen\Application(
 
 $app->withFacades();
 
-// $app->withEloquent();
+$app->withEloquent();
 
 /*
 |--------------------------------------------------------------------------
@@ -37,6 +37,8 @@ $app->withFacades();
 | your own bindings here if you like or you can make another file.
 |
 */
+
+$app->register(App\Providers\AppServiceProvider::class);
 
 $app->register(Illuminate\Mail\MailServiceProvider::class);
 $app->configure('services');

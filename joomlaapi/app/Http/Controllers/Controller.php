@@ -11,7 +11,7 @@ class Controller extends BaseController
     public $secret = '6vi8mD9220dZm9gg';
     
     public function result($array){
-        return response()->json(json_encode($array));
+        return response()->json($array);
     }
     
     public function getSalt($encryption = 'md5-hex', $seed = '', $plaintext = '')
