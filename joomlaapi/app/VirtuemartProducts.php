@@ -8,14 +8,10 @@ class VirtuemartProducts extends Model {
     
     protected $primaryKey = 'virtuemart_product_id';
 
-    protected $fillable = [];
 
-    protected $dates = [];
-
-    public static $rules = [
-        // Validation rules
-    ];
-
-    // Relationships
+    public function medias()
+    {
+        return $this->belongsToMany('App\VirtuemartMedias', 'bxtnj_virtuemart_product_medias', 'virtuemart_product_id', 'virtuemart_media_id');
+    }
 
 }

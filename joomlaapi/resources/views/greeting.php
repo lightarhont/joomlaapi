@@ -3,6 +3,25 @@
         <title>Тестовая страница</title>
     </head>
     <body>
+        
+        <h1>[url]/basket_add</h1>
+        <form method="post" action="/public/basket_add" >
+            <label for="uid">uid</label>
+            <input type="text" name="uid"/>
+            <label for="id">id product</label>
+            <input type="text" name="id" />
+            <label for="id">quantity</label>
+            <input type="text" name="quantity" />
+            <input type="submit" name="submit" value="submit" />
+        </form>
+        
+        <h1>[url]/basket</h1>
+        <form method="get" action="/public/basket" >
+            <label for="uid">uid</label>
+            <input type="text" name="uid"/>
+            <input type="submit" name="submit" value="submit" />
+        </form>
+        
         <h1>[url]/change_password</h1>
         <form method="post" action="/public/change_password" >
             <label for="uid">uid</label>
@@ -53,6 +72,7 @@
             <label for="uid">uid</label>
             <input type="text" name="uid" />
             <input type="submit" name="submit" value="submit" />
-        </form>
+        </form>-->
+        
     </body>
 </html>

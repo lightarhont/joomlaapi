@@ -4,42 +4,41 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use \App\Orders;
 
 class BasketController extends Controller
 {
 
     public function index(Request $request)
     {        
-        $uid = $request->input('uid');
+        $uid = (int)$request->input('uid');
         
-        $data = DB::table('bxtnj_session')->where('userid', '=', $uid)->first();
-        
-        if($data != null):
-            $raw_data = str_replace('\0\0\0', chr(0) . '*' . chr(0), (string)$data->data);
-            $raw_data = explode('|',$raw_data);
-        
-        
-            $data = array();
-        
-            for( $idx = 1, $ic=count($raw_data); $idx<$ic; $idx++ ) {
-                $data[$idx] = unserialize($raw_data[$idx]);
-            }
-            $cart = unserialize($data[2]['vmcart']);
-        
-            $resultarray = array();
+        $order = Orders::where('user_id', $uid)->count();
+        if($order == 0):
+            $order = new Orders;
+            $order->user_id = $uid;
+            $order->save(['timestamps' => false ]);
             
-            foreach($cart->products as $product) {
-                $table = 'bxtnj_virtuemart_manufacturers_ru_ru';
-                $brand = DB::table($table)->where('virtuemart_manufacturer_id', '=', $product->virtuemart_manufacturer_id)->first();
-                $resultarray['brand'] = $brand->mf_name;
-                $resultarray['product_price'] = $product->product_price;
-                $resultarray['product_name'] = $product->product_name;
-                $resultarray['quantity'] = $product->quantity;
-            }
-            return $resultarray;
-        else:
-            return $this->errors(1);
+            return $this->result(0);
         endif;
+        
+        $order = Orders::where('user_id', 198)->first();
+        
+        $arr = array();
+        foreach ($order->products as $product) {
+            $arr['virtuemart_product_id'] = $product->virtuemart_product_id;
+            $arr['name'] = $product->product_sku;
+            $arrmedia = array();
+            foreach ($product->medias as $media){
+                $arrmedia[] = $media->file_title;
+            }
+            $arr['images'] = $arrmedia;
+            $brand = DB::table('bxtnj_virtuemart_product_manufacturers')->where('virtuemart_product_id', '=', $product->virtuemart_product_id)->first();
+            $arr['brand'] = $brand;
+        }
+        
+        
+        return $this->result($arr);
     }
     
     protected function errors($error){
@@ -52,5 +51,4 @@ class BasketController extends Controller
         return $this->result(array('error'=>array('code'=>$error, 'message'=>$errormsg)));
     }
     
-
 }
