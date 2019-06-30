@@ -4,6 +4,89 @@
     </head>
     <body>
         
+        <h1>[url]/sub_categories</h1>
+        <form method="get" action="/public/recent_viewed" >
+            <label for="category">category</label>
+            <input type="text" name="category"/>
+            <input type="submit" name="submit" value="submit" />
+        </form>
+        
+        <h1>[url]/banners</h1>
+        <form method="get" action="/public/banners" >
+            <input type="submit" name="submit" value="submit" />
+        </form>
+        
+        <h1>[url]/same_items</h1>
+        <form method="get" action="/public/same_items" >
+            <label for="uid">uid</label>
+            <input type="text" name="uid"/>
+            <label for="page">page</label>
+            <input type="text" name="page"/>
+            <label for="item_id">item_id</label>
+            <input type="text" name="item_id"/>
+            <input type="submit" name="submit" value="submit" />
+        </form>
+        
+        <h1>[url]/recent_viewed</h1>
+        <form method="get" action="/public/recent_viewed" >
+            <label for="uid">uid</label>
+            <input type="text" name="uid"/>
+            <input type="submit" name="submit" value="submit" />
+        </form>
+        
+        <h1>[url]/hits</h1>
+        <form method="get" action="/public/hits" >
+            <label for="uid">uid</label>
+            <input type="text" name="uid"/>
+            <input type="submit" name="submit" value="submit" />
+        </form>
+        
+        <h1>[url]/new_items</h1>
+        <form method="get" action="/public/new_items" >
+            <label for="uid">uid</label>
+            <input type="text" name="uid"/>
+            <label for="page">page</label>
+            <input type="text" name="page"/>
+            <input type="submit" name="submit" value="submit" />
+        </form>
+        
+        
+        <h1>[url]/discounts</h1>
+        <form method="get" action="/public/discounts" >
+            <label for="uid">uid</label>
+            <input type="text" name="uid"/>
+            <label for="page">page</label>
+            <input type="text" name="page"/>
+            <input type="submit" name="submit" value="submit" />
+        </form>
+        
+        <h1>[url]/popular</h1>
+        <form method="get" action="/public/popular" >
+            <label for="uid">uid</label>
+            <input type="text" name="uid"/>
+            <input type="submit" name="submit" value="submit" />
+        </form>
+        
+        <h1>[url]/basket_change_quantity</h1>
+        <form method="post" action="/public/basket_change_quantity" >
+            <label for="uid">uid</label>
+            <input type="text" name="uid"/>
+            <label for="id">id product</label>
+            <input type="text" name="item_id" />
+            <label for="id">quantity</label>
+            <input type="text" name="quantity" />
+            <input type="submit" name="submit" value="submit" />
+        </form>
+        
+        <h1>[url]/basket_remove_item</h1>
+        <form method="post" action="/public/basket_remove_item" >
+            <label for="uid">uid</label>
+            <input type="text" name="uid"/>
+            <label for="id">id product</label>
+            <input type="text" name="item_id" />
+            <input type="submit" name="submit" value="submit" />
+        </form>
+        
         <h1>[url]/basket_add</h1>
         <form method="post" action="/public/basket_add" >
             <label for="uid">uid</label>
