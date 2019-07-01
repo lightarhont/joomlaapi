@@ -22,7 +22,7 @@ class BasketController extends Controller
             return $this->result(0);
         endif;
         
-        $order = Orders::where('user_id', 198)->first();
+        $order = Orders::where('user_id', $uid)->first();
         
         $arr = array();
         foreach ($order->products as $product) {
@@ -33,7 +33,9 @@ class BasketController extends Controller
                 $arrmedia[] = $media->file_title;
             }
             $arr['images'] = $arrmedia;
-            $brand = DB::table('bxtnj_virtuemart_product_manufacturers')->where('virtuemart_product_id', '=', $product->virtuemart_product_id)->first();
+            $brand = DB::table('bxtnj_virtuemart_product_manufacturers')
+            ->leftJoin('bxtnj_virtuemart_manufacturers_ru_ru', 'bxtnj_virtuemart_product_manufacturers.virtuemart_manufacturer_id', '=', 'bxtnj_virtuemart_manufacturers_ru_ru.virtuemart_manufacturer_id')
+            ->where('bxtnj_virtuemart_product_manufacturers.virtuemart_product_id', '=', $product->virtuemart_product_id)->first();
             $arr['brand'] = $brand;
         }
         
