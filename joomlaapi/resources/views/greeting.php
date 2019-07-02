@@ -4,10 +4,23 @@
     </head>
     <body>
         
+        <h1>[url]/catalog</h1>
+        <form method="get" action="/public/catalog" >
+            <label for="uid">uid</label>
+            <input type="text" name="uid"/>
+            <label for="limit">limit</label>
+            <input type="text" name="limit"/>
+            <label for="offset">offset</label>
+            <input type="text" name="offset"/>
+            <label for="categoryid">categoryid</label>
+            <input type="text" name="categoryid"/>
+            <input type="submit" name="submit" value="submit" />
+        </form>
+        
         <h1>[url]/sub_categories</h1>
-        <form method="get" action="/public/recent_viewed" >
+        <form method="get" action="/public/sub_categories" >
             <label for="category">category</label>
-            <input type="text" name="category"/>
+            <input type="text" name="categoryid"/>
             <input type="submit" name="submit" value="submit" />
         </form>
         
@@ -43,10 +56,10 @@
         
         <h1>[url]/new_items</h1>
         <form method="get" action="/public/new_items" >
-            <label for="uid">uid</label>
-            <input type="text" name="uid"/>
-            <label for="page">page</label>
-            <input type="text" name="page"/>
+            <label for="offset">offset</label>
+            <input type="text" name="offset"/>
+            <label for="limit">limit</label>
+            <input type="text" name="limit"/>
             <input type="submit" name="submit" value="submit" />
         </form>
         

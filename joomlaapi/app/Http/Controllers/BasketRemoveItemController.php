@@ -31,7 +31,7 @@ class BasketRemoveItemController extends Controller
             $arr['name'] = $product->product_sku;
             $arrmedia = array();
             foreach ($product->medias as $media){
-                $arrmedia[] = $media->file_title;
+                $arrmedia[] = $media->file_url;
             }
             $arr['images'] = $arrmedia;
             $brand = DB::table('bxtnj_virtuemart_product_manufacturers')
