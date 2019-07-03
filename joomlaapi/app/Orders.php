@@ -12,10 +12,6 @@ class Orders extends Model {
        0 => "user_id",
     ];
 
-    public static $rules = [
-        // Validation rules
-    ];
-
     // Relationships
     
     public function products()

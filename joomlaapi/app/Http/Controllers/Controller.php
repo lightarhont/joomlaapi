@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Laravel\Lumen\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\DB;
 
 class Controller extends BaseController
 {
@@ -103,4 +104,28 @@ class Controller extends BaseController
 				break;
 		}
 	}
+    
+    public function iterproducts($products){
+        
+        $arr = array();
+        $i = 0;
+        foreach ($products as $product) {
+            
+            $arr[$i]['virtuemart_product_id'] = $product->virtuemart_product_id;
+            $arr[$i]['name'] = $product->product_name;
+            $arrmedia = array();
+            
+            foreach ($product->medias as $media){
+                $arrmedia[] = $media->file_url;
+            }
+            
+            $arr[$i]['images'] = $arrmedia;
+            
+            $arr[$i]['brand'] = $product->manufacturer->ru->mf_name;
+            
+            $i = $i + 1;
+        }
+        
+        return $arr;
+    }
 }

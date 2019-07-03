@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
-use \App\VirtuemartProducts;
+use \App\VirtuemartProductsRu;
 
 class CatalogController extends Controller
 {
@@ -14,20 +14,28 @@ class CatalogController extends Controller
         $limit = (int)$request->input('limit');
         $offset = (int)$request->input('offset');
         $categoryid = (int)$request->input('categoryid');
+        $sort = $request->input('sort');
+        
+        if($sort == 'on'){
+            $sort = 'asc';
+        } else {
+            $sort = 'desc';
+        }
         
         $products = DB::table('bxtnj_virtuemart_product_categories')
-        ->where('bxtnj_virtuemart_product_categories.virtuemart_category_id', '=', $categoryid)->get();
+        ->where('bxtnj_virtuemart_product_categories.virtuemart_category_id', '=', $categoryid)
+        ->orderBy('id', $sort)->get();
         
         
         $arr = array();
         $i = 0;
         foreach($products as $product) {
-            $product = VirtuemartProducts::orderBy('virtuemart_product_id', 'desc')
+            $product = VirtuemartProductsRu::orderBy('virtuemart_product_id', 'desc')
             ->where('virtuemart_product_id', '=', $product->virtuemart_product_id)
             ->first();
             
             $arr[$i]['id'] = $product->virtuemart_product_id;
-            $arr[$i]['product_sku'] = $product->product_sku;
+            $arr[$i]['product_name'] = $product->product_sku;
             
             $arrmedia = array();
             
