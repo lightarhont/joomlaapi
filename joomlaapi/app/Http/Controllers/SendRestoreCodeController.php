@@ -10,9 +10,9 @@ class SendRestoreCodeController extends Controller
 
     public function index(Request $request)
     {
-        $username = $request->input('username');
+        $uid = $request->input('uid');
         $code = $request->input('code');
-        $user = DB::table('bxtnj_users')->where('username', '=', $username)->first();
+        $user = DB::table('bxtnj_users')->where('id', '=', $uid)->first();
         if($user != NULL):
             $salt = $this->getSalt('crypt-md5');
             $hashedToken = md5($code.$salt).':'.$salt;

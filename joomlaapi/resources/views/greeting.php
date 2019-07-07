@@ -90,7 +90,7 @@
         </form>
         
         <h1>[url]/catalog</h1>
-        <form method="get" action="/catalog" >
+        <form method="get" action="/public/catalog" >
             <label for="uid">uid</label>
             <input type="text" name="uid"/>
             <label for="limit">limit</label>
@@ -115,9 +115,9 @@
         <form method="get" action="/banners" >
             <input type="submit" name="submit" value="submit" />
         </form>
-        
+ <!--        
         <h1>[url]/same_items</h1>
-        <form method="get" action="/same_items" >
+        <form method="get" action="/public/same_items" >
             <label for="uid">uid</label>
             <input type="text" name="uid"/>
             <label for="page">page</label>
@@ -128,19 +128,19 @@
         </form>
         
         <h1>[url]/recent_viewed</h1>
-        <form method="get" action="/recent_viewed" >
+        <form method="get" action="/public/recent_viewed" >
             <label for="uid">uid</label>
             <input type="text" name="uid"/>
             <input type="submit" name="submit" value="submit" />
         </form>
-        
+       
         <h1>[url]/hits</h1>
         <form method="get" action="/hits" >
             <label for="uid">uid</label>
             <input type="text" name="uid"/>
             <input type="submit" name="submit" value="submit" />
         </form>
-        
+    -->    
         <h1>[url]/new_items</h1>
         <form method="get" action="/new_items" >
             <label for="offset">offset</label>
@@ -150,7 +150,7 @@
             <input type="submit" name="submit" value="submit" />
         </form>
         
-        
+        <!--
         <h1>[url]/discounts</h1>
         <form method="get" action="/discounts" >
             <label for="uid">uid</label>
@@ -159,14 +159,15 @@
             <input type="text" name="page"/>
             <input type="submit" name="submit" value="submit" />
         </form>
-        
+        -->
+        <!--
         <h1>[url]/popular</h1>
         <form method="get" action="/popular" >
             <label for="uid">uid</label>
             <input type="text" name="uid"/>
             <input type="submit" name="submit" value="submit" />
         </form>
-        
+        -->
         <h1>[url]/basket_change_quantity</h1>
         <form method="post" action="/basket_change_quantity" >
             <label for="uid">uid</label>
@@ -243,8 +244,8 @@
         
         <h1>[url]/send_restore_code</h1>
         <form method="post" action="/send_restore_code" >
-            <label for="username">username</label>
-            <input type="text" name="username" />
+            <label for="uid">uid</label>
+            <input type="text" name="uid" />
             <label for="code">code</label>
             <input type="text" name="code" />
             <input type="submit" name="submit" value="submit" />

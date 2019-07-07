@@ -25,5 +25,7 @@ class UpdateUserController extends Controller
         $data['phone_2'] = $request->input('phone2');
         
         DB::table('bxtnj_virtuemart_userinfos')->where('virtuemart_user_id','=', $uid)->update($data);
+        
+        return $this->result($data);
     }
 }

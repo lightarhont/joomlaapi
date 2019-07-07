@@ -75,6 +75,8 @@ class PlaceOrderController extends Controller
             $ov->products()->attach([$product->virtuemart_product_id,], $pivotdata);
         }
         
+        return $this->result(true);
+        
     }
     
     public function getip(){
