@@ -256,7 +256,7 @@
             <label for="uid">uid</label>
             <input type="text" name="uid" />
             <input type="submit" name="submit" value="submit" />
-        </form>-->
+        </form>
         
     </body>
 </html>

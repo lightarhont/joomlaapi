@@ -24,7 +24,7 @@ class CatalogController extends Controller
         
         $products = DB::table('bxtnj_virtuemart_product_categories')
         ->where('bxtnj_virtuemart_product_categories.virtuemart_category_id', '=', $categoryid)
-        ->orderBy('id', $sort)->get();
+        ->orderBy('id', $sort)->skip($offset)->take($limit)->get();
         
         
         $arr = array();

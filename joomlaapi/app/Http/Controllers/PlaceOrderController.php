@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use \App\Orders;
 use \App\OrderVirtuemart;
 use \App\OrderUserInfos;
+use \App\OrderHistory;
 
 class PlaceOrderController extends Controller
 {
@@ -36,7 +37,7 @@ class PlaceOrderController extends Controller
         
        // $arr = array();
         //$i = 0;
-        
+        //return date('Y-m-d H:i:s');
         
           //  $arr[$i]['virtuemart_product_id'] = $product->virtuemart_product_id;
           //  $arr[$i]['quantity'] = $product->pivot->quantity;
@@ -65,12 +66,18 @@ class PlaceOrderController extends Controller
         
         $ov->userinfos()->save($userinfos);
         
+        $ohdata = array('order_status_code'=>'P',
+                        'created_on'=>date('Y-m-d H:i:s'),
+                        'published'=>1);
+        $oh = new OrderHistory();
+        $ov->history()->save($oh);
+        
         foreach ($order->products as $product) {
             
             $pivotdata = array('product_quantity'=>$product->pivot->quantity,
                                'order_item_sku' => 'артикул',
-                               'order_item_name' => 'название',
-                               'product_item_price' => '3000.00');
+                               'order_item_name' => $product->ru->product_name,
+                               'product_item_price' => $product->price->product_price);
             
             $ov->products()->attach([$product->virtuemart_product_id,], $pivotdata);
         }

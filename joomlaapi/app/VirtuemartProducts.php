@@ -23,5 +23,10 @@ class VirtuemartProducts extends Model {
     {
       return $this->hasOne('App\VirtuemartProductManufacturers', 'virtuemart_product_id', 'virtuemart_product_id');
     }
+    
+    public function price()
+    {
+        return $this->hasOne('App\VirtuemartProductPrice', 'virtuemart_product_id', 'virtuemart_product_id');
+    }
 
 }
