@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use \App\Orders;
+use \App\VirtuemartProducts;
 
 class BasketAddController extends Controller
 {
@@ -35,7 +36,19 @@ class BasketAddController extends Controller
         
         $order->products()->attach([$productid,], array('quantity'=>$quantity));
         
-        return $this->result($productid);
+        $product = VirtuemartProducts::where('virtuemart_product_id', $productid)->first();
+        $data = array('id'=>$productid, 'price'=> $product->price->product_price,
+                      'brand'=>$product->manufacturer->ru->mf_name,
+                      '$quantity'=>$quantity );
+        
+        $arrmedia = array();
+        foreach ($product->medias as $media){
+            $arrmedia[] = $media->file_url;
+        }
+            
+        $data['images'] = $arrmedia;
+        
+        return $this->result($data);
     }
     
 }

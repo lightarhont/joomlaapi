@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Laravel\Lumen\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\DB;
+use \App\VirtuemartProducts;
 
 class Controller extends BaseController
 {
@@ -105,6 +106,16 @@ class Controller extends BaseController
 		}
 	}
     
+    public function setiterproducts($products){
+        $arr = array();
+        foreach($products as $product){
+            $arr[] = $product->virtuemart_product_id;
+        }
+        
+        return $this->iterproducts(VirtuemartProducts::whereIn('virtuemart_product_id', $arr)->get());
+    }
+    
+    
     public function iterproducts($products){
         
         $arr = array();
@@ -112,7 +123,7 @@ class Controller extends BaseController
         foreach ($products as $product) {
             
             $arr[$i]['virtuemart_product_id'] = $product->virtuemart_product_id;
-            $arr[$i]['name'] = $product->product_name;
+            $arr[$i]['name'] = $product->ru->product_name;
             $arrmedia = array();
             
             foreach ($product->medias as $media){
@@ -122,6 +133,10 @@ class Controller extends BaseController
             $arr[$i]['images'] = $arrmedia;
             
             $arr[$i]['brand'] = $product->manufacturer->ru->mf_name;
+            
+            if($product->price()->first() != NULL) {
+                $arr[$i]['price'] = $product->price->product_price;
+            }
             
             $i = $i + 1;
         }

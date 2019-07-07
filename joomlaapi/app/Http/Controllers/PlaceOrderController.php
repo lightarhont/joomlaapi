@@ -35,6 +35,11 @@ class PlaceOrderController extends Controller
         
         $order = Orders::where('user_id', $uid)->first();
         
+        $totalprice = 0;
+        foreach($order->products as $product){
+            $totalprice += $product->price->product_price;
+        }
+        
        // $arr = array();
         //$i = 0;
         //return date('Y-m-d H:i:s');
@@ -52,6 +57,7 @@ class PlaceOrderController extends Controller
             $ov->virtuemart_paymentmethod_id = $payment_type;
             $ov->order_number = 1;
             $ov->customer_note = $info;
+            $ov->order_total = $totalprice;
             $ov->save();
             
         //}
@@ -69,7 +75,7 @@ class PlaceOrderController extends Controller
         $ohdata = array('order_status_code'=>'P',
                         'created_on'=>date('Y-m-d H:i:s'),
                         'published'=>1);
-        $oh = new OrderHistory();
+        $oh = new OrderHistory($ohdata);
         $ov->history()->save($oh);
         
         foreach ($order->products as $product) {

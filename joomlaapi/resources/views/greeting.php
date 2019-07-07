@@ -90,7 +90,7 @@
         </form>
         
         <h1>[url]/catalog</h1>
-        <form method="get" action="/public/catalog" >
+        <form method="get" action="/catalog" >
             <label for="uid">uid</label>
             <input type="text" name="uid"/>
             <label for="limit">limit</label>
@@ -248,13 +248,6 @@
             <input type="text" name="uid" />
             <label for="code">code</label>
             <input type="text" name="code" />
-            <input type="submit" name="submit" value="submit" />
-        </form>
-        
-        <h1>[url]/basket</h1>
-        <form method="post" action="/basket" >
-            <label for="uid">uid</label>
-            <input type="text" name="uid" />
             <input type="submit" name="submit" value="submit" />
         </form>
         

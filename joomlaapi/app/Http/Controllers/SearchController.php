@@ -15,13 +15,6 @@ class SearchController extends Controller
         
         $products = VirtuemartProductsRu::where('product_name', 'like', '%'.$search.'%')->get();
         
-        $arr = array(); 
-        foreach($products as $product){
-            $arr[] = $product->virtuemart_product_id;
-        }
-        
-        $vp = VirtuemartProducts::whereIn('virtuemart_product_id', $arr)->get();
-        
-        return $this->result($this->iterproducts($vp));
+        return $this->result($this->setiterproducts($products));
     }
 }

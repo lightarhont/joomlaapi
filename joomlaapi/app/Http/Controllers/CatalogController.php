@@ -27,32 +27,7 @@ class CatalogController extends Controller
         ->orderBy('id', $sort)->skip($offset)->take($limit)->get();
         
         
-        $arr = array();
-        $i = 0;
-        foreach($products as $product) {
-            $product = VirtuemartProductsRu::orderBy('virtuemart_product_id', 'desc')
-            ->where('virtuemart_product_id', '=', $product->virtuemart_product_id)
-            ->first();
-            
-            $arr[$i]['id'] = $product->virtuemart_product_id;
-            $arr[$i]['product_name'] = $product->product_sku;
-            
-            $arrmedia = array();
-            
-            foreach ($product->medias as $media){
-                $arrmedia[] = $media->file_url;
-            }
-            
-            $arr[$i]['images'] = $arrmedia;
-            
-            $brand = DB::table('bxtnj_virtuemart_product_manufacturers')
-            ->leftJoin('bxtnj_virtuemart_manufacturers_ru_ru', 'bxtnj_virtuemart_product_manufacturers.virtuemart_manufacturer_id', '=', 'bxtnj_virtuemart_manufacturers_ru_ru.virtuemart_manufacturer_id')
-            ->where('bxtnj_virtuemart_product_manufacturers.virtuemart_product_id', '=', $product->virtuemart_product_id)->first();
-            
-            $arr[$i]['brand'] = $brand->mf_name;
-            
-            $i = $i + 1;
-        }
+        $arr = $this->setiterproducts($products);
         
         if($arr === Array()){
             return $this->getcategoryies($categoryid);

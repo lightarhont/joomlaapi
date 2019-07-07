@@ -20,6 +20,13 @@ class ProductController extends Controller
         $arr['name'] = $product->ru->product_name;
         $arr['description'] = $product->ru->product_desc;
         $arr['brand'] = $product->manufacturer->ru->mf_name;
+        $arr['price'] = $product->price->product_price;
+        
+        foreach ($product->medias as $media){
+            $arrmedia[] = $media->file_url;
+        }
+            
+        $arr['images'] = $arrmedia;
         
         return $this->result($arr);
     }
