@@ -40,7 +40,7 @@
         </form>
         
         <h1>[url]/product</h1>
-        <form method="get" action="/product" >
+        <form method="get" action="/public/product" >
             <label for="productid">productid</label>
             <input type="text" name="id"/>
             <input type="submit" name="submit" value="submit" />
