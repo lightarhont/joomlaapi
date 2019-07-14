@@ -40,41 +40,56 @@ class PlaceOrderController extends Controller
             $totalprice += $product->price->product_price;
         }
         
-       // $arr = array();
-        //$i = 0;
-        //return date('Y-m-d H:i:s');
+        $date = date('Y-m-d H:i:s');
         
-          //  $arr[$i]['virtuemart_product_id'] = $product->virtuemart_product_id;
-          //  $arr[$i]['quantity'] = $product->pivot->quantity;
+        $ovlastget = OrderVirtuemart::orderBy('virtuemart_order_id', 'desc')->get();
+        $ovlast = (string)($ovlastget[0]->virtuemart_order_id+1).time();
         
+        $ov = new OrderVirtuemart;
+        $ov->virtuemart_user_id = $uid;
+        $ov->ip_address  = $this->getip();
+        $ov->virtuemart_paymentmethod_id = $payment_type;
         
-        //$ovf = OrderVirtuemart::where('virtuemart_user_id',$uid)->count();
+        $ov->order_number = $ovlast;
+        $ov->order_pass = $this->RandomString();
+        $ov->customer_number = $this->RandomString();
         
-        //if($ovf==0) {
-            $ov = new OrderVirtuemart;
-            $ov->virtuemart_user_id = $uid;
-            $ov->ip_address  = $this->getip();
-            $ov->virtuemart_paymentmethod_id = $payment_type;
-            $ov->order_number = 1;
-            $ov->customer_note = $info;
-            $ov->order_total = $totalprice;
-            $ov->save();
+        $ov->customer_note = $info;
+        $ov->order_total = $totalprice;
+        $ov->order_salesPrice = $totalprice;
+        $ov->order_subtotal = $totalprice;
+        $ov->order_tax = '0.0000';
+        $ov->order_shipment = '0.00';
+        $ov->order_shipment_tax = '0.0000';
+        $ov->order_payment = '0.00';
+        $ov->order_payment_tax = '0.0000';
+        $ov->order_currency = 131;
+        $ov->order_status = 'U';
+        $ov->user_currency_id = 131;
+        $ov->virtuemart_shipmentmethod_id = 2;
+        $ov->order_language ='ru-RU';
+        $ov->created_by = $uid;
+        $ov->modified_by = $uid;
+        $ov->created_on = $date;
+        $ov->modified_on = $date;
+        $ov->save();
             
-        //}
-        //else {
-        //    $ov = OrderVirtuemart::where('virtuemart_user_id',$uid)->first();
-        //}
-        
         $user = DB::table('bxtnj_users')->where('bxtnj_users.id','=',$uid)->first();
         $data['email'] = $user->email;
+        $data['virtuemart_user_id'] = $uid;
+        $data['address_type'] = 'BT';
         
         $userinfos = new OrderUserInfos($data);
         
         $ov->userinfos()->save($userinfos);
         
-        $ohdata = array('order_status_code'=>'P',
-                        'created_on'=>date('Y-m-d H:i:s'),
+        $ohdata = array('order_status_code'=>'U',
+                        'created_by'=>$uid,
+                        'modified_by'=>$uid,
+                        'created_on'=>$date,
+                        'modified_on'=>$date,
                         'published'=>1);
+        
         $oh = new OrderHistory($ohdata);
         $ov->history()->save($oh);
         
@@ -83,25 +98,43 @@ class PlaceOrderController extends Controller
             $pivotdata = array('product_quantity'=>$product->pivot->quantity,
                                'order_item_sku' => 'артикул',
                                'order_item_name' => $product->ru->product_name,
-                               'product_item_price' => $product->price->product_price);
+                               'product_item_price' => $product->price->product_price,
+                               'product_subtotal_with_tax'=> $product->price->product_price,
+                               'product_final_price'=> $product->price->product_price,
+                               'product_discountedPriceWithoutTax'=> $product->price->product_price,
+                               'product_basePriceWithTax'=> $product->price->product_price,
+                               'created_by' => $uid,
+                               'modified_by' => $uid,
+                               'created_on' => $date,
+                               'modified_on' => $date,
+                               'order_status' => 'U',
+                               'product_attribute' => $product->pivot->params
+                               );
             
-            $ov->products()->attach([$product->virtuemart_product_id,], $pivotdata);
+            $params = json_decode($product->pivot->params);
+            
+            if(is_object($params)):
+                $key = key(get_object_vars($params));
+            else:
+                $key = $product->virtuemart_product_id;
+            endif;
+            
+            $ov->products()->attach([$key,], $pivotdata);
         }
         
         return $this->result(true);
         
     }
     
-    public function getip(){
-                if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
-    $ip = $_SERVER['HTTP_CLIENT_IP'];
-} elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-    $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-} else {
-    $ip = $_SERVER['REMOTE_ADDR'];
-}
-
-return $ip;
+    public function RandomString($length = 10)
+    {
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $charactersLength = strlen($characters);
+    $randomString = '';
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[rand(0, $charactersLength - 1)];
+    }
+    return $randomString;
     }
 
 }

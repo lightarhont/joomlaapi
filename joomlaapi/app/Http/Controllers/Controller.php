@@ -138,9 +138,54 @@ class Controller extends BaseController
                 $arr[$i]['price'] = $product->price->product_price;
             }
             
+            $arr[$i]['params'] = json_decode($product->fiels->custom_param);
+            
             $i = $i + 1;
         }
         
         return $arr;
+    }
+    
+    public function iterproductscart($order){
+        
+        $arr = array();
+        $i = 0;
+        foreach ($order->products as $product) {
+            
+            $arr[$i]['virtuemart_product_id'] = $product->virtuemart_product_id;
+            $arr[$i]['name'] = $product->ru->product_name;
+            $arrmedia = array();
+            
+            foreach ($product->medias as $media){
+                $arrmedia[] = $media->file_url;
+            }
+            
+            $arr[$i]['images'] = $arrmedia;
+            
+            $arr[$i]['brand'] = $product->manufacturer->ru->mf_name;
+            
+            $arr[$i]['params'] = json_decode($product->pivot->params);
+            $arr[$i]['quantity'] = $product->pivot->quantity;
+            
+            if($product->price()->first() != NULL) {
+                $arr[$i]['price'] = $product->price->product_price;
+            }
+            
+            $i = $i + 1;
+        }
+        
+        return $arr;
+    }
+    
+    public function getip(){
+                if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+    $ip = $_SERVER['HTTP_CLIENT_IP'];
+} elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+    $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+} else {
+    $ip = $_SERVER['REMOTE_ADDR'];
+}
+
+return $ip;
     }
 }

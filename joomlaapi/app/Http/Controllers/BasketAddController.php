@@ -15,6 +15,7 @@ class BasketAddController extends Controller
         $productid = (int)$request->input('id');
         $uid = (int)$request->input('uid');
         $quantity = (int)$request->input('quantity');
+        $params = $request->input('params');
         
         $order = Orders::where('user_id', $uid)->count();
         if($order == 0):
@@ -34,21 +35,11 @@ class BasketAddController extends Controller
             
         endif;
         
-        $order->products()->attach([$productid,], array('quantity'=>$quantity));
+        $order->products()->attach([$productid,], array('quantity'=>$quantity, 'params'=>$params));
         
-        $product = VirtuemartProducts::where('virtuemart_product_id', $productid)->first();
-        $data = array('id'=>$productid, 'price'=> $product->price->product_price,
-                      'brand'=>$product->manufacturer->ru->mf_name,
-                      '$quantity'=>$quantity );
+        $order = Orders::where('user_id', $uid)->first();
         
-        $arrmedia = array();
-        foreach ($product->medias as $media){
-            $arrmedia[] = $media->file_url;
-        }
-            
-        $data['images'] = $arrmedia;
-        
-        return $this->result($data);
+        return $this->result($this->iterproductscart($order));
     }
     
 }

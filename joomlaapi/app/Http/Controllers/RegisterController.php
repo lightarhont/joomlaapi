@@ -50,12 +50,7 @@ class RegisterController extends Controller
     protected function findindb($name, $email, $password){
         $user = DB::table('bxtnj_users')->where('email', '=', $email)->first();
         if($user == NULL):
-            $user = DB::table('bxtnj_users')->where('name', '=', $name)->first();
-            if($user == NULL):
-                return 0;
-            else:
-                return 2;
-            endif;
+            return 0;
         else:
             return 1;
         endif;

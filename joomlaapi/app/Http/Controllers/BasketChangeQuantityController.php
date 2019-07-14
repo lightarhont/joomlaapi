@@ -34,6 +34,6 @@ class BasketChangeQuantityController extends Controller
         
         $order = Orders::where('user_id', $uid)->first();
         
-        return $this->result($this->iterproducts($order->products));
+        return $this->result($this->iterproductscart($order));
     }
 }

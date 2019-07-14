@@ -16,7 +16,7 @@ class BannersController extends Controller
         foreach ($banners as $banner){
             $arr[$i]['id'] = $banner->id;
             $arr[$i]['dest_url'] = $banner->clickurl;
-            $arr[$i]['params'] = $banner->params;
+            $arr[$i]['params'] = json_decode($banner->params);
             $i = $i + 1;
         }
         

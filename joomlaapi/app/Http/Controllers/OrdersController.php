@@ -12,6 +12,21 @@ class OrdersController extends Controller
     {
         $uid = (int)$request->input('uid');
         
-        $ov = OrderVirtuemart::where('virtuemart_user_id',$uid)->first();
+        $ovs = OrderHistory::where('created_by',$uid)->get();
+        
+        $data = array();
+        $i = 0;
+        foreach($ovs as $ov){
+            if($ov->order != NULL){
+                $data[$i]['id'] = $ov->virtuemart_order_id;
+                $data[$i]['order_number'] = $ov->order->order_number;
+                $data[$i]['order_total'] = $ov->order->order_total;
+                $data[$i]['order_status_code'] = $ov->order_status_code;
+                $data[$i]['created_on'] = $ov->created_on;
+                $i=$i+1;
+            }
+        }
+        
+        return $data;
     }
 }

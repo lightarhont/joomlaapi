@@ -16,6 +16,6 @@ class Orders extends Model {
     
     public function products()
     {
-        return $this->belongsToMany('App\VirtuemartProducts', 'orderproduct', 'order_id', 'product_id')->withPivot('quantity');
+        return $this->belongsToMany('App\VirtuemartProducts', 'orderproduct', 'order_id', 'product_id')->withPivot('quantity', 'params');
     }
 }

@@ -4,6 +4,20 @@
     </head>
     <body>
         
+        <h1>[url]/orders</h1>
+        <form method="get" action="/orders" >
+            <label for="uid">uid</label>
+            <input type="text" name="uid"/>
+            <input type="submit" name="submit" value="submit" />
+        </form>
+        
+        <h1>[url]/reviews</h1>
+        <form method="get" action="/reviews" >
+            <label for="productid">productid</label>
+            <input type="text" name="id"/>
+            <input type="submit" name="submit" value="submit" />
+        </form>
+        
         <h1>[url]/place_order</h1>
         <form method="post" action="/place_order" >
             <label for="uid">uid</label>
@@ -100,7 +114,13 @@
             <label for="categoryid">categoryid</label>
             <input type="text" name="categoryid"/>
             <label for="sort">sort</label>
-            <input type="checkbox" name="sort"/>
+            <select name="sort">
+                <option value="0">Новые снизу</option>
+                <option value="1">Новые сверху</option>
+                <option value="2">От дешёвых к дорогим</option>
+                <option value="3">От дорогих к дешёвым</option>
+                <option value="4">По популярности</option>
+            </select>
             <input type="submit" name="submit" value="submit" />
         </form>
         
@@ -117,7 +137,7 @@
         </form>
  <!--        
         <h1>[url]/same_items</h1>
-        <form method="get" action="/public/same_items" >
+        <form method="get" action="/same_items" >
             <label for="uid">uid</label>
             <input type="text" name="uid"/>
             <label for="page">page</label>
@@ -128,7 +148,7 @@
         </form>
         
         <h1>[url]/recent_viewed</h1>
-        <form method="get" action="/public/recent_viewed" >
+        <form method="get" action="/recent_viewed" >
             <label for="uid">uid</label>
             <input type="text" name="uid"/>
             <input type="submit" name="submit" value="submit" />
@@ -194,8 +214,12 @@
             <input type="text" name="uid"/>
             <label for="id">id product</label>
             <input type="text" name="id" />
-            <label for="id">quantity</label>
+            <label for="quantity">quantity</label>
             <input type="text" name="quantity" />
+            <br />
+            <label for="child">child</label>
+            <textarea name='params' cols="50" rows="5"></textarea>
+            <br />
             <input type="submit" name="submit" value="submit" />
         </form>
         
