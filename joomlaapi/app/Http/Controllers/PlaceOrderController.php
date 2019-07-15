@@ -122,7 +122,15 @@ class PlaceOrderController extends Controller
             $ov->products()->attach([$key,], $pivotdata);
         }
         
-        return $this->result(true);
+        $result = array(
+            'id'=>$ov->virtuemart_order_id,
+            'number'=>$ov->order_number,
+            'order_total'=>$ov->order_total,
+            'date'=>$ov->created_on
+        );
+        
+        
+        return $this->result($result);
         
     }
     

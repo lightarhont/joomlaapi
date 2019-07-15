@@ -4,6 +4,16 @@
     </head>
     <body>
         
+        <h1>[url]/payment_methods</h1>
+        <form method="get" action="/public/payment_methods" >
+            <input type="submit" name="submit" value="submit" />
+        </form>
+        
+        <h1>[url]/shipment_methods</h1>
+        <form method="get" action="/public/shipment_methods" >
+            <input type="submit" name="submit" value="submit" />
+        </form>
+        
         <h1>[url]/orders</h1>
         <form method="get" action="/orders" >
             <label for="uid">uid</label>
@@ -19,7 +29,7 @@
         </form>
         
         <h1>[url]/place_order</h1>
-        <form method="post" action="/place_order" >
+        <form method="post" action="/public/place_order" >
             <label for="uid">uid</label>
             <input type="text" name="uid"/><br />
             <label for="first_name">first_name</label>
@@ -209,7 +219,7 @@
         </form>
         
         <h1>[url]/basket_add</h1>
-        <form method="post" action="/basket_add" >
+        <form method="post" action="/public/basket_add" >
             <label for="uid">uid</label>
             <input type="text" name="uid"/>
             <label for="id">id product</label>

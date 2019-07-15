@@ -73,6 +73,10 @@ $app->get('reviews', 'ReviewsController@index');
 
 $app->post('place_order', 'PlaceOrderController@index');
 
+$app->get('payment_methods', 'PaymentMethodsController@index');
+
+$app->get('shipment_methods', 'ShipmentMethodsController@index');
+
 $app->get('size_table', 'SizeTableController@index');
 
 $app->get('test', 'TestController@index');
