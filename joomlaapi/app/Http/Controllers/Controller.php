@@ -171,6 +171,30 @@ class Controller extends BaseController
                 $arr[$i]['price'] = $product->price->product_price;
             }
             
+            $parent = $product->product_parent_id;
+            
+            if($parent != 0) {
+                
+                $parentobj = VirtuemartProducts::where('virtuemart_product_id', $parent)->first();
+                
+                $arr[$i]['parent']['id'] = $product->product_parent_id;
+                
+                $arr[$i]['parent']['name'] = $parentobj->ru->product_name;
+                
+                $arrmedia = array();
+                foreach ($parentobj->medias as $media){
+                    $arrmedia[] = $media->file_url;
+                }
+                $arr[$i]['parent']['images'] = $arrmedia;
+                
+                if($parentobj->price()->first() != NULL) {
+                    $arr[$i]['parent']['price'] = $parentobj->price->product_price;
+                }
+                
+                $arr[$i]['parent']['brand'] = $parentobj->manufacturer->ru->mf_name;
+                
+            }
+            
             $i = $i + 1;
         }
         

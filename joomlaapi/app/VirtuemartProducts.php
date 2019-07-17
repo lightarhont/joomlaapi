@@ -33,4 +33,9 @@ class VirtuemartProducts extends Model {
     {
         return $this->hasOne('App\ProductCustomField', 'virtuemart_product_id', 'virtuemart_product_id');
     }
+    
+    public function rating()
+    {
+        return $this->hasOne('App\VirtuemartRating', 'virtuemart_product_id', 'virtuemart_product_id');
+    }
 }

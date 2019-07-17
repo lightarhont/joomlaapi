@@ -34,6 +34,14 @@ class ProductController extends Controller
             
         $arr['images'] = $arrmedia;
         
+        if($product->rating != null){
+            
+            $arr['rating'] = $product->rating;
+            
+        } else {
+            $arr['rating'] = null;
+        }
+        
         return $this->result($arr);
     }
     
