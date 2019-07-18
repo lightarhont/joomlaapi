@@ -22,14 +22,14 @@
         </form>
         
         <h1>[url]/reviews</h1>
-        <form method="get" action="/public/reviews" >
+        <form method="get" action="/reviews" >
             <label for="productid">productid</label>
             <input type="text" name="id"/>
             <input type="submit" name="submit" value="submit" />
         </form>
         
         <h1>[url]/place_order</h1>
-        <form method="post" action="/public/place_order" >
+        <form method="post" action="/place_order" >
             <label for="uid">uid</label>
             <input type="text" name="uid"/><br />
             <label for="first_name">first_name</label>
@@ -59,7 +59,7 @@
         </form>
         
         <h1>[url]/update_user</h1>
-        <form method="post" action="/public/update_user" >
+        <form method="post" action="/update_user" >
             <label for="uid">uid</label>
             <input type="text" name="uid"/><br />
             <label for="name">name</label>
@@ -80,7 +80,7 @@
         </form>
         
         <h1>[url]/user_info</h1>
-        <form method="get" action="/public/user_info" >
+        <form method="get" action="/user_info" >
             <label for="uid">uid</label>
             <input type="text" name="uid"/>
             <input type="submit" name="submit" value="submit" />
@@ -122,7 +122,7 @@
         </form>
         
         <h1>[url]/banners</h1>
-        <form method="get" action="/public/banners" >
+        <form method="get" action="/banners" >
             <input type="submit" name="submit" value="submit" />
         </form>
  <!--        
@@ -221,7 +221,7 @@
         </form>
         
         <h1>[url]/change_password</h1>
-        <form method="post" action="/public/change_password" >
+        <form method="post" action="/change_password" >
             <label for="uid">uid</label>
             <input type="text" name="uid"/>
             <label for="password">password</label>
