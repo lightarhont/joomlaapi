@@ -13,7 +13,7 @@ class ReviewsController extends Controller
     {
         $productid = (int)$request->input('id');
         
-        $vrs = VirtuemartReviews::where('virtuemart_product_id', $productid)->get();
+        $vrs = VirtuemartReviews::where('virtuemart_product_id', $productid)->where('published', 1)->get();
         
         
         $arr = array();
@@ -21,9 +21,11 @@ class ReviewsController extends Controller
         foreach($vrs as $vr):
         
             $arr[$i]['product'] = $vr->product->ru->product_name;
+            $arr[$i]['name'] = $vr->user->name;
             $arr[$i]['comment'] = $vr->comment;
             $arr[$i]['rating'] = $vr->review_rating;
-             	 
+            $arr[$i]['created'] = $vr->created_on;
+            
             $i = $i + 1;
         
         endforeach;

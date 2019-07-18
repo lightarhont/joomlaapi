@@ -8,26 +8,30 @@ use \App\Orders;
 use \App\OrderVirtuemart;
 use \App\OrderUserInfos;
 use \App\OrderHistory;
+use \App\VirtuemartProducts;
 
 class PlaceOrderController extends Controller
 {
+    
+    protected function getparentproduct($product){
+        if($product->product_parent_id == 0) {
+            return $product;
+        } else {
+            return VirtuemartProducts::where('virtuemart_product_id', $product->product_parent_id)->first();
+        }
+    }
+    
     public function index(Request $request)
     {
         $data = array();
         $uid = (int)$request->input('uid');
         
         $data['first_name'] = $request->input('first_name');
-        $data['middle_name'] = $request->input('middle_name');
         $data['last_name'] = $request->input('last_name');
         //$data['name'] = $data['first_name'] . ' ' . $data['middle_name'] . ' ' . $data['last_name'];
-        $data['virtuemart_country_id'] = (int)$request->input('countryid');
-        $data['virtuemart_state_id'] = (int)$request->input('stateid');
         $data['zip'] = $request->input('zip');
-        $data['city'] = $request->input('city');
-        $data['address_1'] = $request->input('address_1');
-        $data['address_2'] = $request->input('address_2');
+        $data['address_type_name'] = $request->input('address');
         $data['phone_1'] = $request->input('phone1');
-        $data['phone_2'] = $request->input('phone2');
         
         $ship_type = $request->input('ship_type');
         $payment_type = (int)$request->input('payment_type');
@@ -37,7 +41,8 @@ class PlaceOrderController extends Controller
         
         $totalprice = 0;
         foreach($order->products as $product){
-            $totalprice += $product->price->product_price;
+            $productdata = $this->getparentproduct($product);
+            $totalprice += $productdata->price->product_price;
         }
         
         $date = date('Y-m-d H:i:s');
@@ -78,6 +83,8 @@ class PlaceOrderController extends Controller
         $data['email'] = $user->email;
         $data['virtuemart_user_id'] = $uid;
         $data['address_type'] = 'BT';
+        $data['created_by'] = $uid;
+        $data['created_on'] = $date;
         
         $userinfos = new OrderUserInfos($data);
         
@@ -94,15 +101,16 @@ class PlaceOrderController extends Controller
         $ov->history()->save($oh);
         
         foreach ($order->products as $product) {
-            
+            $productdata = $this->getparentproduct($product);
+            $price = $productdata->price->product_price;
             $pivotdata = array('product_quantity'=>$product->pivot->quantity,
-                               'order_item_sku' => 'артикул',
+                               'order_item_sku' => $product->ru->product_name,
                                'order_item_name' => $product->ru->product_name,
-                               'product_item_price' => $product->price->product_price,
-                               'product_subtotal_with_tax'=> $product->price->product_price,
-                               'product_final_price'=> $product->price->product_price,
-                               'product_discountedPriceWithoutTax'=> $product->price->product_price,
-                               'product_basePriceWithTax'=> $product->price->product_price,
+                               'product_item_price' => $price,
+                               'product_subtotal_with_tax'=> $price,
+                               'product_final_price'=> $price,
+                               'product_discountedPriceWithoutTax'=> $price,
+                               'product_basePriceWithTax'=> $price,
                                'created_by' => $uid,
                                'modified_by' => $uid,
                                'created_on' => $date,

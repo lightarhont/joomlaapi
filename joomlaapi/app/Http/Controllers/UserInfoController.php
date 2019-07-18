@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use App\VirtuemartUser;
 
 class UserInfoController extends Controller
 {
@@ -11,35 +12,27 @@ class UserInfoController extends Controller
     {
         $uid = (int)$request->input('uid');
         
-        $user = DB::table('bxtnj_users')
-        ->leftJoin('bxtnj_virtuemart_userinfos', 'bxtnj_virtuemart_userinfos.virtuemart_user_id', '=', 'bxtnj_users.id')
-        ->where('bxtnj_users.id','=',$uid)
-        ->first();
+        $u = VirtuemartUser::where('id', $uid)->first();
         
-        $userinfo = array();
-        $userinfo['id'] = $user->id;
-        $userinfo['email'] = $user->email;
-        $userinfo['first_name'] = $user->first_name;
-        $userinfo['middle_name'] = $user->middle_name;
-        $userinfo['last_name '] = $user->last_name;
+        $f = DB::table('bxtnj_virtuemart_userinfos')->where('virtuemart_user_id','=', $uid)->count();
         
-        if($user->virtuemart_country_id != 0) {
-            $country = DB::table('bxtnj_virtuemart_countries')->where('virtuemart_country_id', '=', $user->virtuemart_country_id)->first();
-            $userinfo['country'] = $country->country_name;
+        $data = array();
+        
+        $data['id'] = $uid;
+        $data['username'] = $u->username;
+        $data['name'] = $u->name;
+        $data['email'] = $u->email;
+        
+        if($f == 0){
+            $data['profile'] = false;
+        } else {
+            //$profile = array();
+            $p = DB::table('bxtnj_virtuemart_userinfos')->where('virtuemart_user_id','=', $uid)->first();
+            $profile = $p;
+            $data['profile'] = $profile;
         }
         
-        if($user->virtuemart_state_id != 0) {
-            $country = DB::table('bxtnj_virtuemart_states')->where('virtuemart_state_id', '=', $user->virtuemart_state_id)->first();
-            $userinfo['state'] = $country->country_name;
-        }
         
-        $userinfo['city'] = $user->city;
-        $userinfo['zip'] = $user->zip;
-        $userinfo['address_1'] = $user->address_1;
-        $userinfo['address_2'] = $user->address_2;
-        $userinfo['phone1'] = $user->phone_1;
-        $userinfo['phone2'] = $user->phone_2;
-        
-        return $this->result($userinfo);
+        return $this->result($data);
     }
 }

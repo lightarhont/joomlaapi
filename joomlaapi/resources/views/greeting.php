@@ -22,38 +22,26 @@
         </form>
         
         <h1>[url]/reviews</h1>
-        <form method="get" action="/reviews" >
+        <form method="get" action="/public/reviews" >
             <label for="productid">productid</label>
             <input type="text" name="id"/>
             <input type="submit" name="submit" value="submit" />
         </form>
         
         <h1>[url]/place_order</h1>
-        <form method="post" action="/place_order" >
+        <form method="post" action="/public/place_order" >
             <label for="uid">uid</label>
             <input type="text" name="uid"/><br />
             <label for="first_name">first_name</label>
             <input type="text" name="first_name"/><br />
-            <label for="middle_name">middle_name</label>
-            <input type="text" name="middle_name"/><br />
             <label for="last_name">last_name</label>
             <input type="text" name="last_name"/><br />
-            <label for="countryid">countryid</label>
-            <input type="text" name="countryid"/><br />
-            <label for="stateid">stateid</label>
-            <input type="text" name="stateid"/><br />
-            <label for="city">city</label>
-            <input type="text" name="city"/><br />
             <label for="zip">zip</label>
             <input type="text" name="zip"/><br />
-            <label for="address_1">address_1</label>
-            <input type="text" name="address_1"/><br />
-            <label for="address_2">address_2</label>
-            <input type="text" name="address_2"/><br />
+            <label for="address">address</label>
+            <input type="text" name="address"/><br />
             <label for="phone1">phone1</label>
             <input type="text" name="phone1"/><br />
-            <label for="phone2">phone2</label>
-            <input type="text" name="phone2"/><br />
             <label for="payment_type">payment_type</label>
             <input type="text" name="payment_type"/><br />
             <label for="ship_type">ship_type</label>
@@ -71,36 +59,28 @@
         </form>
         
         <h1>[url]/update_user</h1>
-        <form method="post" action="/update_user" >
+        <form method="post" action="/public/update_user" >
             <label for="uid">uid</label>
             <input type="text" name="uid"/><br />
+            <label for="name">name</label>
+            <input type="text" name="name"/><br />
+            <label for="username">username</label>
+            <input type="text" name="username"/><br />
             <label for="first_name">first_name</label>
             <input type="text" name="first_name"/><br />
-            <label for="middle_name">middle_name</label>
-            <input type="text" name="middle_name"/><br />
             <label for="last_name">last_name</label>
             <input type="text" name="last_name"/><br />
-            <label for="countryid">countryid</label>
-            <input type="text" name="countryid"/><br />
-            <label for="stateid">stateid</label>
-            <input type="text" name="stateid"/><br />
-            <label for="city">city</label>
-            <input type="text" name="city"/><br />
             <label for="zip">zip</label>
             <input type="text" name="zip"/><br />
-            <label for="address_1">address_1</label>
-            <input type="text" name="address_1"/><br />
-            <label for="address_2">address_2</label>
-            <input type="text" name="address_2"/><br />
-            <label for="phone1">phone1</label>
-            <input type="text" name="phone1"/><br />
-            <label for="phone2">phone2</label>
-            <input type="text" name="phone2"/><br />
+            <label for="address_1">address</label>
+            <input type="text" name="address"/><br />
+            <label for="phone1">phone</label>
+            <input type="text" name="phone"/><br />
             <input type="submit" name="submit" value="submit" />
         </form>
         
         <h1>[url]/user_info</h1>
-        <form method="get" action="/user_info" >
+        <form method="get" action="/public/user_info" >
             <label for="uid">uid</label>
             <input type="text" name="uid"/>
             <input type="submit" name="submit" value="submit" />
@@ -142,7 +122,7 @@
         </form>
         
         <h1>[url]/banners</h1>
-        <form method="get" action="/banners" >
+        <form method="get" action="/public/banners" >
             <input type="submit" name="submit" value="submit" />
         </form>
  <!--        
@@ -241,7 +221,7 @@
         </form>
         
         <h1>[url]/change_password</h1>
-        <form method="post" action="/change_password" >
+        <form method="post" action="/public/change_password" >
             <label for="uid">uid</label>
             <input type="text" name="uid"/>
             <label for="password">password</label>

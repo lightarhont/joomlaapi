@@ -14,4 +14,9 @@ class VirtuemartReviews extends Model {
     {
       return $this->hasOne('App\VirtuemartProducts', 'virtuemart_product_id', 'virtuemart_product_id');
     }
+    
+    public function user()
+    {
+      return $this->hasOne('App\VirtuemartUser', 'id', 'created_by');
+    }
 }

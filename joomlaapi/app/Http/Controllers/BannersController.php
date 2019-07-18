@@ -9,8 +9,9 @@ class BannersController extends Controller
 {
     public function index(Request $request)
     {
-        $banners = DB::table('bxtnj_banners')->get();
+        $banners = DB::table('bxtnj_modules')->where('id', 	665)->first();
         
+        /*
         $arr = array();
         $i = 0;
         foreach ($banners as $banner){
@@ -19,7 +20,10 @@ class BannersController extends Controller
             $arr[$i]['params'] = json_decode($banner->params);
             $i = $i + 1;
         }
+        */
         
-        return $this->result($arr);
+        $data = json_decode(json_decode($banners->params)->image_show_data);
+        
+        return $this->result($data);
     }
 }

@@ -38,8 +38,8 @@ class ChangePasswordController extends Controller
         $insert = array('access_token'=>$token,'refresh_token'=>$refresh_token,'expires_in'=>$expires_in);
         
         if($this->transaction($insert)):
-            $insert['id'] = $user->id;
-            return $this->result($insert);
+            $result = array('token'=>$insert['access_token'], 'id'=>$user->id); 
+            return $this->result($result);
         else:
             return $this->errors(2);
         endif;
