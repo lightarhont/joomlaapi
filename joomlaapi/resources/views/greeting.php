@@ -29,7 +29,7 @@
         </form>
         
         <h1>[url]/place_order</h1>
-        <form method="post" action="/place_order" >
+        <form method="post" action="/public/place_order" >
             <label for="uid">uid</label>
             <input type="text" name="uid"/><br />
             <label for="first_name">first_name</label>
@@ -59,7 +59,7 @@
         </form>
         
         <h1>[url]/update_user</h1>
-        <form method="post" action="/update_user" >
+        <form method="post" action="/public/update_user" >
             <label for="uid">uid</label>
             <input type="text" name="uid"/><br />
             <label for="name">name</label>
@@ -80,14 +80,14 @@
         </form>
         
         <h1>[url]/user_info</h1>
-        <form method="get" action="/user_info" >
+        <form method="get" action="/public/user_info" >
             <label for="uid">uid</label>
             <input type="text" name="uid"/>
             <input type="submit" name="submit" value="submit" />
         </form>
         
         <h1>[url]/search</h1>
-        <form method="get" action="/search" >
+        <form method="get" action="/public/search" >
             <label for="search">search</label>
             <input type="text" name="search"/>
             <input type="submit" name="submit" value="submit" />

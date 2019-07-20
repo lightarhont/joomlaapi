@@ -138,7 +138,9 @@ class Controller extends BaseController
                 $arr[$i]['price'] = $product->price->product_price;
             }
             
-            $arr[$i]['params'] = json_decode($product->fiels->custom_param);
+            if($product->fiels()->first() != NULL) {
+                $arr[$i]['params'] = json_decode($product->fiels->custom_param);
+            }
             
             $i = $i + 1;
         }
