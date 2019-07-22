@@ -60,7 +60,7 @@
         
         <h1>[url]/update_user</h1>
         <form method="post" action="/update_user" >
-            <label for="uid">uid</label>
+           <!-- <label for="uid">uid</label>
             <input type="text" name="uid"/><br />
             <label for="name">name</label>
             <input type="text" name="name"/><br />
@@ -75,8 +75,27 @@
             <label for="address_1">address</label>
             <input type="text" name="address"/><br />
             <label for="phone1">phone</label>
+            <input type="text" name="phone"/><br />-->
+            
+            <label for="uid">uid</label>
+            <input type="text" name="uid"/><br />
+            <label for="name">name</label>
+            <input type="text" name="name"/><br />
+            <label for="last_name">last_name</label>
+            <input type="text" name="last_name"/><br />
+            <label for="phone">phone</label>
             <input type="text" name="phone"/><br />
-            <input type="submit" name="submit" value="submit" />
+            <label for="city">city</label>
+            <input type="text" name="city"/><br />
+            <label for="street">street</label>
+            <input type="text" name="street"/><br />
+            <label for="house">house</label>
+            <input type="text" name="house"/><br />
+            <label for="flat">flat</label>
+            <input type="text" name="flat"/><br />
+            <label for="post_index">post_index</label>
+            <input type="text" name="post_index"/><br />
+            <input type="submit" name="submit" value="submit" /> 
         </form>
         
         <h1>[url]/user_info</h1>

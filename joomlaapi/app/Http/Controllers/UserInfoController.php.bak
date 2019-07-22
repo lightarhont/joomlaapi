@@ -14,7 +14,7 @@ class UserInfoController extends Controller
         
         $u = VirtuemartUser::where('id', $uid)->first();
         
-        $f = DB::table('userprofile')->where('user_id','=', $uid)->count();
+        $f = DB::table('bxtnj_virtuemart_userinfos')->where('virtuemart_user_id','=', $uid)->count();
         
         $data = array();
         
@@ -27,7 +27,7 @@ class UserInfoController extends Controller
             $data['profile'] = false;
         } else {
             //$profile = array();
-            $p = DB::table('userprofile')->where('user_id','=', $uid)->first();
+            $p = DB::table('bxtnj_virtuemart_userinfos')->where('virtuemart_user_id','=', $uid)->first();
             $profile = $p;
             $data['profile'] = $profile;
         }
