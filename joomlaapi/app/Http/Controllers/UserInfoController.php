@@ -28,8 +28,13 @@ class UserInfoController extends Controller
         } else {
             //$profile = array();
             $p = DB::table('userprofile')->where('user_id','=', $uid)->first();
-            $profile = $p;
-            $data['profile'] = $profile;
+            $data['last_name'] = $p->last_name;
+            $data['phone'] = $p->phone;
+            $data['city'] = $p->city;
+            $data['street'] = $p->street;
+            $data['house'] = $p->house;
+            $data['flat'] = $p->flat;
+            $data['post_index'] = $p->post_index;
         }
         
         
