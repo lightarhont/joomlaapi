@@ -38,6 +38,20 @@ class PlaceOrderController extends Controller
         $info = $request->input('info');
         
         $first_name_delivery = $request->input('first_name_delivery', '');
+        $last_name_delivery = $request->input('last_name_delivery', '');
+        $phone_delivery = $request->input('phone_delivery', '');
+        $address_delivery = $request->input('address_delivery', '');
+        $payment_token = $request->input('payment_token', '');
+        
+        if($last_name_delivery != '') {
+            $data['last_name'] = $last_name_delivery;
+        }
+        if($last_name_delivery != '') {
+            $data['phone_1'] = $phone_delivery;
+        }
+        if($address_delivery != '') {
+            $data['address_type_name'] = $address_delivery;
+        }
         
         $order = Orders::where('user_id', $uid)->first();
         

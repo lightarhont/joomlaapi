@@ -50,6 +50,14 @@
             <input type="text" name="info"/><br />
             <label for="first_name_delivery">first_name_delivery</label>
             <input type="text" name="first_name_delivery"/><br />
+            <label for="last_name_delivery">last_name_delivery</label>
+            <input type="text" name="last_name_delivery"/><br />
+            <label for="phone_delivery">phone_delivery</label>
+            <input type="text" name="phone_delivery"/><br />
+            <label for="address_delivery">address_delivery</label>
+            <input type="text" name="address_delivery"/><br />
+            <label for="payment_token">payment_token</label>
+            <input type="text" name="payment_token"/><br />
             <input type="submit" name="submit" value="submit" />
         </form>
         
