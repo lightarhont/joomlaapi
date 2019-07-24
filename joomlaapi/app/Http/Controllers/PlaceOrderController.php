@@ -37,6 +37,8 @@ class PlaceOrderController extends Controller
         $payment_type = (int)$request->input('payment_type');
         $info = $request->input('info');
         
+        $first_name_delivery = $request->input('first_name_delivery', '');
+        
         $order = Orders::where('user_id', $uid)->first();
         
         $totalprice = 0;
@@ -82,7 +84,12 @@ class PlaceOrderController extends Controller
         $user = DB::table('bxtnj_users')->where('bxtnj_users.id','=',$uid)->first();
         $data['email'] = $user->email;
         $data['virtuemart_user_id'] = $uid;
-        $data['address_type'] = 'BT';
+        if($first_name_delivery == '') {
+            $data['address_type'] = 'BT';
+        } else {
+            $data['address_type'] = 'ST';
+            $data['first_name'] = $first_name_delivery;
+        }
         $data['created_by'] = $uid;
         $data['created_on'] = $date;
         

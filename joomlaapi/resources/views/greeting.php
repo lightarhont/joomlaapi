@@ -48,6 +48,8 @@
             <input type="text" name="ship_type"/><br />
             <label for="info">info</label>
             <input type="text" name="info"/><br />
+            <label for="first_name_delivery">first_name_delivery</label>
+            <input type="text" name="first_name_delivery"/><br />
             <input type="submit" name="submit" value="submit" />
         </form>
         
