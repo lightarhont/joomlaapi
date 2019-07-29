@@ -158,6 +158,7 @@ class PlaceOrderController extends Controller
             'date'=>$ov->created_on
         );
         
+        DB::table('orderproduct')->where('order_id','=', $order->id)->delete();
         
         return $this->result($result);
         

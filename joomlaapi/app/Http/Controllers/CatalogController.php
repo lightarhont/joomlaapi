@@ -95,7 +95,9 @@ class CatalogController extends Controller
     
     protected function getcategoryies($categoryid){
         $categoryes = DB::table('bxtnj_virtuemart_category_categories')
+        ->leftJoin('bxtnj_virtuemart_categories', 'bxtnj_virtuemart_categories.virtuemart_category_id', '=', 'bxtnj_virtuemart_category_categories.category_child_id')
         ->leftJoin('bxtnj_virtuemart_categories_ru_ru', 'bxtnj_virtuemart_categories_ru_ru.virtuemart_category_id', '=', 'bxtnj_virtuemart_category_categories.category_child_id')
+        ->where('bxtnj_virtuemart_categories.published', '=', 1)
         ->where('bxtnj_virtuemart_category_categories.category_parent_id', '=', $categoryid)->get();
         
         $arrcategories = array();
