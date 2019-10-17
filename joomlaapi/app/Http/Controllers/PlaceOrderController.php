@@ -9,6 +9,7 @@ use \App\OrderVirtuemart;
 use \App\OrderUserInfos;
 use \App\OrderHistory;
 use \App\VirtuemartProducts;
+use \App\YandexKassaToken;
 
 class PlaceOrderController extends Controller
 {
@@ -63,8 +64,23 @@ class PlaceOrderController extends Controller
         
         $date = date('Y-m-d H:i:s');
         
-        $ovlastget = OrderVirtuemart::orderBy('virtuemart_order_id', 'desc')->get();
-        $ovlast = (string)($ovlastget[0]->virtuemart_order_id+1).time();
+        //$ovlastget = OrderVirtuemart::orderBy('virtuemart_order_id', 'desc')->get();
+	
+	$ovlastgetcount = OrderVirtuemart::count();
+
+	if($ovlastgetcount != 0){
+		$ovlastget = OrderVirtuemart::orderBy('virtuemart_order_id', 'desc')->get();
+		$ovlast = (string)($ovlastget[0]->virtuemart_order_id+1).time();
+	} else {
+		$ovlast = (string)"1".time();
+	}
+        
+        $kassapaymentid = 5; 
+        if($payment_type == $kassapaymentid){
+            $order_status = 'P';
+        } else {
+            $order_status = 'U';
+        }
         
         $ov = new OrderVirtuemart;
         $ov->virtuemart_user_id = $uid;
@@ -85,9 +101,9 @@ class PlaceOrderController extends Controller
         $ov->order_payment = '0.00';
         $ov->order_payment_tax = '0.0000';
         $ov->order_currency = 131;
-        $ov->order_status = 'U';
+        $ov->order_status = $order_status;
         $ov->user_currency_id = 131;
-        $ov->virtuemart_shipmentmethod_id = 2;
+        $ov->virtuemart_shipmentmethod_id = $ship_type;
         $ov->order_language ='ru-RU';
         $ov->created_by = $uid;
         $ov->modified_by = $uid;
@@ -160,8 +176,25 @@ class PlaceOrderController extends Controller
         
         DB::table('orderproduct')->where('order_id','=', $order->id)->delete();
         
+        
+        if($payment_type == $kassapaymentid){
+            $result['order_status'] = 'pending'; 
+            $result['yandexkassa_token'] = $this->setkassatoken($ov->virtuemart_order_id);
+        }
+        
         return $this->result($result);
         
+    }
+    
+    public function setkassatoken($orderid){
+        $token = sha1(mt_rand(1, 90000) . 'SALT');
+        $expires_in = time()+60*60;
+        $yk = new YandexKassaToken;
+        $yk->access_token = $token;
+        $yk->order_id = $orderid;
+        $yk->expires_in = $expires_in;
+        $yk->save();
+        return $token;
     }
     
     public function RandomString($length = 10)

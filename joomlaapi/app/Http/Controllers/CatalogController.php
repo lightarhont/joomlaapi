@@ -18,8 +18,10 @@ class CatalogController extends Controller
         $sort = $request->input('sort');
         
         $productscount = DB::table('bxtnj_virtuemart_product_categories')
+        ->leftJoin('bxtnj_virtuemart_categories', 'bxtnj_virtuemart_product_categories.virtuemart_category_id', '=', 'bxtnj_virtuemart_categories.virtuemart_category_id')
+        ->where('bxtnj_virtuemart_categories.published', '=', 1)
         ->where('bxtnj_virtuemart_product_categories.virtuemart_category_id', '=', $categoryid)
-        ->skip($offset)->take($limit)->count();
+        ->count();
         
         if($productscount == 0){
             return $this->getcategoryies($categoryid);

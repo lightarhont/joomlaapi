@@ -14,9 +14,9 @@ class SendRestoreCodeController extends Controller
         $code = $request->input('code');
         $user = DB::table('bxtnj_users')->where('id', '=', $uid)->first();
         if($user != NULL):
-            $salt = $this->getSalt('crypt-md5');
-            $hashedToken = md5($code.$salt).':'.$salt;
-            if($user->activation == $hashedToken):
+            $parts	= explode( ':', $user->activation );
+            $testcrypt = $this->getCryptedPassword($code, $parts[1]);
+            if ($parts[0] == $testcrypt):
                 return $this->result(array('success'=>true));
             else:
                 return $this->errors(2);
