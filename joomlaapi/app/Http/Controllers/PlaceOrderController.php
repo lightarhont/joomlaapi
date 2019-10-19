@@ -45,8 +45,6 @@ class PlaceOrderController extends Controller
         $address_delivery = $request->input('address_delivery', '');
         $payment_token = $request->input('payment_token', '');
         
-        return array('yandex'=>var_dump($client));
-        
         if($last_name_delivery != '') {
             $data['last_name'] = $last_name_delivery;
         }
