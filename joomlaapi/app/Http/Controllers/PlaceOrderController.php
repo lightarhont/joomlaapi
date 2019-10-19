@@ -9,7 +9,8 @@ use \App\OrderVirtuemart;
 use \App\OrderUserInfos;
 use \App\OrderHistory;
 use \App\VirtuemartProducts;
-use \App\YandexKassaToken;
+use YandexCheckout\Client;
+//use \vendor\yandex-money\yandex-checkout-sdk-php\lib\Client;
 
 class PlaceOrderController extends Controller
 {
@@ -43,6 +44,8 @@ class PlaceOrderController extends Controller
         $phone_delivery = $request->input('phone_delivery', '');
         $address_delivery = $request->input('address_delivery', '');
         $payment_token = $request->input('payment_token', '');
+        
+        return array('yandex'=>var_dump($client));
         
         if($last_name_delivery != '') {
             $data['last_name'] = $last_name_delivery;
@@ -178,23 +181,33 @@ class PlaceOrderController extends Controller
         
         
         if($payment_type == $kassapaymentid){
-            $result['order_status'] = 'pending'; 
-            $result['yandexkassa_token'] = $this->setkassatoken($ov->virtuemart_order_id);
+            $result['confirmation_url'] = $this->yandexkassa($payment_token, $totalprice);
         }
         
         return $this->result($result);
         
     }
     
-    public function setkassatoken($orderid){
-        $token = sha1(mt_rand(1, 90000) . 'SALT');
-        $expires_in = time()+60*60;
-        $yk = new YandexKassaToken;
-        $yk->access_token = $token;
-        $yk->order_id = $orderid;
-        $yk->expires_in = $expires_in;
-        $yk->save();
-        return $token;
+    
+    public function yandexkassa($payment_token, $amountvalue)
+    {
+        $client = new Client();
+        $key = 'live_QbzYYFb2-s1YKLFf0fX3XD9LUp_rOc95zL6VQc_yVDU';
+        $shopid = '606798';
+        $client->setAuth($shopid, $key);
+        $paymentjson = $client->createPayment(
+        array(
+            'payment_token' => $payment_token,
+            'amount' => array(
+                'value' => $amountvalue,
+                'currency' => 'RUB',
+            ),
+        ),
+        uniqid('', true)
+        );
+        
+        $payment = json_decode($paymentjson);
+        return $payment['confirmation']['confirmation_url'];
     }
     
     public function RandomString($length = 10)
