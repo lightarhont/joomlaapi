@@ -193,7 +193,7 @@ class PlaceOrderController extends Controller
         $key = 'live_QbzYYFb2-s1YKLFf0fX3XD9LUp_rOc95zL6VQc_yVDU';
         $shopid = '606798';
         $client->setAuth($shopid, $key);
-        $paymentjson = $client->createPayment(
+        $payment = $client->createPayment(
         array(
             'payment_token' => $payment_token,
             'amount' => array(
@@ -204,7 +204,6 @@ class PlaceOrderController extends Controller
         uniqid('', true)
         );
         
-        $payment = json_decode($paymentjson);
         return $payment['confirmation']['confirmation_url'];
     }
     
