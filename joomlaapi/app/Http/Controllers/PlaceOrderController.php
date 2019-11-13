@@ -10,6 +10,7 @@ use \App\OrderUserInfos;
 use \App\OrderHistory;
 use \App\VirtuemartProducts;
 use YandexCheckout\Client;
+use YandexCheckout\Model\NotificationEventType;
 //use \vendor\yandex-money\yandex-checkout-sdk-php\lib\Client;
 
 class PlaceOrderController extends Controller
@@ -168,8 +169,10 @@ class PlaceOrderController extends Controller
             $ov->products()->attach([$key,], $pivotdata);
         }
         
+        $orderid = $ov->virtuemart_order_id;
+        
         $result = array(
-            'id'=>$ov->virtuemart_order_id,
+            'id'=>$orderid,
             'number'=>$ov->order_number,
             'order_total'=>$ov->order_total,
             'date'=>$ov->created_on
@@ -179,7 +182,7 @@ class PlaceOrderController extends Controller
         
         
         if($payment_type == $kassapaymentid){
-            $result['confirmation_url'] = $this->yandexkassa($payment_token, $totalprice);
+            $result['confirmation_url'] = $this->yandexkassa($payment_token, $totalprice, $orderid);
         }
         
         return $this->result($result);
@@ -187,7 +190,7 @@ class PlaceOrderController extends Controller
     }
     
     
-    public function yandexkassa($payment_token, $amountvalue)
+    public function yandexkassa($payment_token, $amountvalue, $orderid)
     {
         $client = new Client();
         $key = 'live_QbzYYFb2-s1YKLFf0fX3XD9LUp_rOc95zL6VQc_yVDU';
@@ -203,6 +206,14 @@ class PlaceOrderController extends Controller
         ),
         uniqid('', true)
         );
+        
+        
+        $url = 'http://sportstylepro.ru:90/kassapaymenthook/'.$orderid;
+        
+        $response = $client->addWebhook([
+            "event" => NotificationEventType::PAYMENT_SUCCEEDED,
+            "url"   => $url,
+        ]);
         
         return $payment['confirmation']['confirmation_url'];
     }

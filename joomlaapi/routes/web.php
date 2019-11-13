@@ -79,4 +79,6 @@ $app->get('shipment_methods', 'ShipmentMethodsController@index');
 
 $app->get('size_table', 'SizeTableController@index');
 
+$app->post('kassapaymenthook/{orderid}', 'KassaPaymentHookController@index');
+
 $app->get('test', 'TestController@index');

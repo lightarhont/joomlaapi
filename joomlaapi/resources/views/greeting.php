@@ -3,7 +3,7 @@
         <title>Тестовая страница</title>
     </head>
     <body>
-        
+
         <h1>[url]/payment_methods</h1>
         <form method="get" action="/payment_methods" >
             <input type="submit" name="submit" value="submit" />
