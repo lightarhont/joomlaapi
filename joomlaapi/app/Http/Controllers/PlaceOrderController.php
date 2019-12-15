@@ -193,8 +193,10 @@ class PlaceOrderController extends Controller
     public function yandexkassa($payment_token, $amountvalue, $orderid)
     {
         $client = new Client();
-        $key = 'live_QbzYYFb2-s1YKLFf0fX3XD9LUp_rOc95zL6VQc_yVDU';
-        $shopid = '606798';
+        //$key = 'live_QbzYYFb2-s1YKLFf0fX3XD9LUp_rOc95zL6VQc_yVDU';
+        //$shopid = '606798';
+        $key = 'test_syrSHFF7CC69jKi5CdSs40c70xQLRrOz2J4-4uNx6Ms';
+        $shopid = '612590';
         $client->setAuth($shopid, $key);
         $payment = $client->createPayment(
         array(
@@ -203,12 +205,15 @@ class PlaceOrderController extends Controller
                 'value' => $amountvalue,
                 'currency' => 'RUB',
             ),
+            'metadata' => array(
+                'order_id' => $orderid
+            )
         ),
         uniqid('', true)
         );
         
         
-        $url = 'http://sportstylepro.ru:90/kassapaymenthook/'.$orderid;
+        $url = 'http://sportstylepro.ru:90/kassapaymenthook/';
         
         $response = $client->addWebhook([
             "event" => NotificationEventType::PAYMENT_SUCCEEDED,

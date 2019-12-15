@@ -14,7 +14,6 @@ class KassaPaymentHookController extends Controller
     public function index(Request $request) {
         $json = file_get_contents('php://input');
         $requestBody= json_decode($json, true);
-        $orderid = $request->input('orderid');
         
         try {
             $notification = ($requestBody['event'] === NotificationEventType::PAYMENT_SUCCEEDED)
@@ -27,7 +26,7 @@ class KassaPaymentHookController extends Controller
         
         $payment = $notification->getObject();
         
-        $ov = OrderVirtuemart::where('virtuemart_order_id', $orderid)->first();
+        $ov = OrderVirtuemart::where('virtuemart_order_id', $payment->metadata->order_id)->first();
         $ov->order_status = 'C';
         $ov->save();
     }
